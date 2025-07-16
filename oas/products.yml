@@ -1,40 +1,12 @@
 openapi: 3.0.1
 info:
-  title: Product API
-  description: Pactflow Product API demo
+  title: Banking Product API
+  description: Product API demo
   version: 1.0.0
+servers:
+- url: /
 paths:
   /products:
-    post:
-      summary: Create a product
-      description: Creates a new product
-      operationId: createProduct
-      requestBody:
-        description: Create a new Product
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
-            examples:
-              application/json:
-                value:
-                  id: "1234"
-                  type: "food"
-                  price: 42
-      responses:
-        "200":
-          description: successful operation
-          content:
-            "application/json; charset=utf-8":
-              schema:
-                $ref: '#/components/schemas/Product'
-              examples:
-                application/json:
-                  value:
-                    id: "1234"
-                    type: "food"
-                    price: 42
     get:
       summary: List all products
       description: Returns all products
@@ -43,23 +15,52 @@ paths:
         "200":
           description: successful operation
           content:
-            "application/json; charset=utf-8":
+            application/json:
               schema:
-                type: "array"
+                type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: "#/components/schemas/Product"
               examples:
                 application/json:
                   value:
-                    - id: "1234"
-                      type: "food"
-                      price: 42
-                      # name: "pizza"
-                      # version: "1.0.0"
-                      # see https://github.com/apiaryio/dredd/issues/1430 for why
+                  - id: "1234"
+                    type: food
+                    price: 42
         "400":
           description: Invalid ID supplied
           content: {}
+    post:
+      summary: Create a product
+      description: Creates a new product
+      operationId: createProduct
+      requestBody:
+        description: Create a new Product
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+            examples:
+              application/json:
+                value:
+                  id: "1234"
+                  type: food
+                  price: 42
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              examples:
+                application/json:
+                  value:
+                    id: "1234"
+                    type: food
+                    price: 42
+        "201":
+          description: created
   /product/{id}:
     get:
       summary: Find product by ID
@@ -69,40 +70,63 @@ paths:
       - name: id
         in: path
         description: ID of product to get
+        required: true
+        style: simple
+        explode: false
         schema:
           type: string
-        required: true
         example: 10
       responses:
         "200":
           description: successful operation
           content:
-            "application/json; charset=utf-8":
+            application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               examples:
                 application/json:
                   value:
                     id: "1234"
-                    type: "food"
+                    type: food
                     price: 42
-                    # name: "pizza"
-                    # version: "1.0.0"
-                    # see https://github.com/apiaryio/dredd/issues/1430 for why
         "400":
           description: Invalid ID supplied
           content: {}
         "404":
           description: Product not found
           content: {}
+  /products/{id}/reviews/{reviewId}:
+    get:
+      summary: Get product review
+      operationId: getProductReview
+      parameters:
+      - name: id
+        in: path
+        description: Product ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: reviewId
+        in: path
+        description: Review ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: success
 components:
   schemas:
     Product:
-      type: object
       required:
-        - id
-        - name
-        - price
+      - id
+      - name
+      - price
+      type: object
       properties:
         id:
           type: string
@@ -114,3 +138,19 @@ components:
           type: string
         price:
           type: number
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+          description: Product category
+    Error:
+      type: object
+      properties:
+        errorType:
+          type: string
+        message:
+          type: string
+        relatedError:
+          $ref: "#/components/schemas/Error"
