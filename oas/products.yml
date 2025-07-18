@@ -4,7 +4,8 @@ info:
   description: Product API demo
   version: 1.0.0
 servers:
-- url: /
+- url: https://virtserver.swaggerhub.com/MConneely/banking-product_api/1.0.0
+  description: SwaggerHub API Auto Mocking
 paths:
   /products:
     get:
