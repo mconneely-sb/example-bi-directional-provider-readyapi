@@ -27,9 +27,33 @@ paths:
                   - id: "1234"
                     type: food
                     price: 42
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_204"
         "400":
           description: Invalid ID supplied
           content: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_401"
+        "413":
+          description: Request Entity Too Large
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_413"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_500"
     post:
       summary: Create a product
       description: Creates a new product
@@ -155,3 +179,31 @@ components:
           type: string
         relatedError:
           $ref: "#/components/schemas/Error"
+    inline_response_204:
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: mkh7lkc8gsyrf
+    inline_response_401:
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: eit1v5lzsm59j
+    inline_response_413:
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: atwhrve2tz3em
+    inline_response_500:
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: cvdanz3ofzx4u
