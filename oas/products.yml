@@ -1,11 +1,10 @@
 openapi: 3.0.1
 info:
-  title: Banking Product API
-  description: Product API demo
+  title: Product API
+  description: Pactflow Product API demo
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/MConneely/banking-product_api/1.0.0
-  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/MConneely/ProductAPI/1.0.0
 paths:
   /products:
     get:
@@ -16,7 +15,7 @@ paths:
         "200":
           description: successful operation
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 type: array
                 items:
@@ -27,33 +26,9 @@ paths:
                   - id: "1234"
                     type: food
                     price: 42
-        "204":
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/inline_response_204"
         "400":
           description: Invalid ID supplied
           content: {}
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/inline_response_401"
-        "413":
-          description: Request Entity Too Large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/inline_response_413"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/inline_response_500"
     post:
       summary: Create a product
       description: Creates a new product
@@ -75,7 +50,7 @@ paths:
         "200":
           description: successful operation
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Product"
               examples:
@@ -84,8 +59,6 @@ paths:
                     id: "1234"
                     type: food
                     price: 42
-        "201":
-          description: created
   /product/{id}:
     get:
       summary: Find product by ID
@@ -105,45 +78,15 @@ paths:
         "200":
           description: successful operation
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Product"
-              examples:
-                application/json:
-                  value:
-                    id: "1234"
-                    type: food
-                    price: 42
         "400":
           description: Invalid ID supplied
           content: {}
         "404":
           description: Product not found
           content: {}
-  /products/{id}/reviews/{reviewId}:
-    get:
-      summary: Get product review
-      operationId: getProductReview
-      parameters:
-      - name: id
-        in: path
-        description: Product ID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: reviewId
-        in: path
-        description: Review ID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: success
 components:
   schemas:
     Product:
@@ -163,47 +106,20 @@ components:
           type: string
         price:
           type: number
-        tags:
-          type: array
-          items:
-            type: string
-        category:
-          type: string
-          description: Product category
-    Error:
+    ProductModel:
+      required:
+      - id
+      - name
+      - price
       type: object
       properties:
-        errorType:
+        id:
           type: string
-        message:
+        type:
           type: string
-        relatedError:
-          $ref: "#/components/schemas/Error"
-    inline_response_204:
-      type: object
-      properties:
-        message:
+        name:
           type: string
-          x-stoplight:
-            id: mkh7lkc8gsyrf
-    inline_response_401:
-      type: object
-      properties:
-        message:
+        version:
           type: string
-          x-stoplight:
-            id: eit1v5lzsm59j
-    inline_response_413:
-      type: object
-      properties:
-        message:
-          type: string
-          x-stoplight:
-            id: atwhrve2tz3em
-    inline_response_500:
-      type: object
-      properties:
-        message:
-          type: string
-          x-stoplight:
-            id: cvdanz3ofzx4u
+        price:
+          type: number
