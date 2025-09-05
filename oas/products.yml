@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Product API
-  description: Pactflow Product API demo
+  description: Pactflow Product API
   version: 1.0.0
 servers:
 - url: https://virtserver.swaggerhub.com/MConneely/ProductAPI/1.0.0
