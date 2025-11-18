@@ -86,7 +86,7 @@ publish_provider_contract:
       --provider-app-version ${VERSION} \
       --branch ${BRANCH} \
       --content-type application/yaml \
-      --verification-exit-code=0 \
+      --verification-exit-code=1 \
       --verification-results ${REPORT_PATH} \
       --verification-results-content-type ${REPORT_FILE_CONTENT_TYPE}\
       --verifier ${VERIFIER_TOOL}
